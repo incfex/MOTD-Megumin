@@ -4,24 +4,25 @@
 # https://ownyourbits.com/2017/04/05/customize-your-motd-login-message-in-debian-and-ubuntu/
 
 # Enable additional locales
-# sed -i 's/.\{0,2\}ja_JP.UTF-8 UTF-8/ja_JP.UTF-8 UTF-8/' /etc/locale.gen | grep ja_JP
-# locale-gen
+sed -i 's/.\{0,2\}ja_JP.UTF-8 UTF-8/ja_JP.UTF-8 UTF-8/' /etc/locale.gen | grep ja_JP
+locale-gen
 
 # disable /etc/init.d/motd
-# systemctl disable motd
+systemctl disable motd
 
 # Remove static motd
-# rm -f /etc/motd
+rm -f /etc/motd
 
 # Create folder to hold motd scripts
-# mkdir /etc/update-motd.d
+mkdir -p /etc/update-motd.d
 
 # Remove "last login" message
-# sed -i 's/.\{0,1\}PrintLastLog.\{0,5\}$/PrintLastLog no/' /etc/ssh/sshd_config | grep PrintLast 
+sed -i 's/.\{0,1\}PrintLastLog.\{0,5\}$/PrintLastLog no/' /etc/ssh/sshd_config | grep PrintLast 
+systemctl restart sshd
 
 # Write the motd script to the folder
 
-echo '
+echo '#!/bin/bash
 # Megumin Lines
 Lines[0]="黒より黒く闇より暗き漆黒に我が深紅の混淆を望みたもう。覚醒のとき来たれり。無謬の境界に落ちし理。無行の歪みとなりて現出せよ！踊れ踊れ踊れ、我が力の奔流に望むは崩壊なり。並ぶ者なき崩壊なり。万象等しく灰塵に帰し、深淵より来たれ！これが人類最大の威力の攻撃手段、これこそが究極の攻撃魔法、エクスプロージョン！"
 Lines[1]="光に覆われし漆黒よ。夜を纏いし爆炎よ。紅魔の名のもとに原初の崩壊を顕現す。終焉の王国の地に、力の根源を隠匿せし者。我が前に統べよ！エクスプロージョン！"
@@ -39,7 +40,7 @@ lineNum=$(($RANDOM % ${#Lines[@]}))
 echo ""
 echo "${Lines[$lineNum]}"
 echo ""
-' > /etc/update-motd.d/15-Megumin
+' > /etc/update-motd.d/15-megumin
 
 # Make the script runnable
-chmod 731 /etc/update-motd.d/15-Megumin
+chmod 755 /etc/update-motd.d/15-megumin
