@@ -4,6 +4,8 @@
 # https://ownyourbits.com/2017/04/05/customize-your-motd-login-message-in-debian-and-ubuntu/
 
 # Enable additional locales
+# sed -i 's/.\{0,2\}ja_JP.UTF-8 UTF-8/ja_JP.UTF-8 UTF-8/' /etc/locale.gen | grep ja_JP
+# locale-gen
 
 # disable /etc/init.d/motd
 # systemctl disable motd
